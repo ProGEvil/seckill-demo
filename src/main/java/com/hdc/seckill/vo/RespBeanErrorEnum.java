@@ -15,7 +15,11 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum RespBeanErrorEnum {
-    ERROR(500,"服务端异常");
+    //通用
+    ERROR(500,"服务端异常"),
+    LOGIN_ERROR(500210,"用户名或密码不正确"),
+    MOBILE_ERROR(500211,"手机号码不正确");
+
     private final Integer code;
     private final String message;
 }

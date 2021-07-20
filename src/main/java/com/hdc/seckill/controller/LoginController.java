@@ -1,8 +1,10 @@
 package com.hdc.seckill.controller;
 
+import com.hdc.seckill.service.IUserService;
 import com.hdc.seckill.vo.LoginVo;
 import com.hdc.seckill.vo.RespBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class LoginController {
 
+    @Autowired
+    private IUserService userService;
+
     @RequestMapping("/toLogin")
     public String toLogin(){
         return "login";
@@ -28,7 +33,6 @@ public class LoginController {
     @RequestMapping("/doLogin")
     @ResponseBody
     public RespBean doLogin(LoginVo loginVo){
-        log.info("{}",loginVo);
-        return null;
+        return userService.doLogin(loginVo);
     }
 }

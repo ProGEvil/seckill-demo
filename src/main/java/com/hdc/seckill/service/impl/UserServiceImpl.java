@@ -4,7 +4,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hdc.seckill.mapper.UserMapper;
 import com.hdc.seckill.pojo.User;
 import com.hdc.seckill.service.IUserService;
+import com.hdc.seckill.utils.MD5Util;
+import com.hdc.seckill.utils.ValidatorUtil;
+import com.hdc.seckill.vo.LoginVo;
+import com.hdc.seckill.vo.RespBean;
+import com.hdc.seckill.vo.RespBeanErrorEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 /**
  * <p>
@@ -16,5 +23,34 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
-
+    @Autowired
+    private UserMapper userMapper;
+    /*
+     * @Author ProG_Evil
+     * @Description //实现登陆功能
+     * @Date 11:02 下午 2021/7/20
+     * @Param
+     * @return
+     **/
+    @Override
+    public RespBean doLogin(LoginVo loginVo){
+        String mobile = loginVo.getMobile();
+        String password = loginVo.getPassword();
+        if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)){
+            return RespBean.error(RespBeanErrorEnum.LOGIN_ERROR);
+        }
+        if(!ValidatorUtil.isMobile(mobile)){
+            return RespBean.error(RespBeanErrorEnum.MOBILE_ERROR);
+        }
+        //根据手机号获取用户
+        User user = userMapper.selectById(mobile);
+        if(null == user){
+            return RespBean.error(RespBeanErrorEnum.LOGIN_ERROR);
+        }
+        //判断密码是否正确
+        if(!MD5Util.formPassToDBPass(password,user.getSlat()).equals(user.getPassword())){
+            return RespBean.error(RespBeanErrorEnum.LOGIN_ERROR);
+        }
+        return RespBean.success();
+    }
 }
