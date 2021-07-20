@@ -1,7 +1,11 @@
 package com.hdc.seckill.controller;
 
+import com.hdc.seckill.vo.LoginVo;
+import com.hdc.seckill.vo.RespBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date 2021/7/19 9:40 下午
  * @Version 1.0
  **/
-@RestController
+@Controller
 @RequestMapping("/login")
 @Slf4j
 public class LoginController {
@@ -22,5 +26,9 @@ public class LoginController {
     }
 
     @RequestMapping("/doLogin")
-    public
+    @ResponseBody
+    public RespBean doLogin(LoginVo loginVo){
+        log.info("{}",loginVo);
+        return null;
+    }
 }
