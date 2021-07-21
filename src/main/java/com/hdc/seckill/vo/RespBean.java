@@ -20,10 +20,10 @@ public class RespBean {
     private Object obj;
 //成功返回结果
     public static RespBean success(){
-        return new RespBean(RespBeanSuccessEnum.SUCCESS.getCode(), RespBean.success().getMessage(),null);
+        return new RespBean(RespBeanSuccessEnum.SUCCESS.getCode(), RespBeanSuccessEnum.SUCCESS.getMessage(), null);
     }
     public static RespBean success(Object obj){
-        return new RespBean(RespBeanSuccessEnum.SUCCESS.getCode(), RespBean.success().getMessage(),obj);
+        return new RespBean(RespBeanSuccessEnum.SUCCESS.getCode(), RespBeanSuccessEnum.SUCCESS.getMessage(), obj);
     }
 
     //失败返回结果
