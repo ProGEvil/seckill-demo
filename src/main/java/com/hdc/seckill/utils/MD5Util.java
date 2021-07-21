@@ -31,7 +31,7 @@ public class MD5Util {
     public static String formPassToDBPass(String formPass,String salt){//salt为存到数据库
         //该salt为随机生成的
         String str = "" + salt.charAt(0) + salt.charAt(2) + formPass + salt.charAt(5) + salt.charAt(4);
-        return md5(salt);
+        return md5(str);
     }
 
     //该方法为后端调用的方法
