@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @ClassName RespBean
- * @Description TODO
+ * @Description 定义登陆成功和失败的弹出信息方法
  * @Author prog_evil
  * @Date 2021/7/19 9:59 下午
  * @Version 1.0
@@ -27,7 +27,7 @@ public class RespBean {
     }
 
     //失败返回结果
-    public static RespBean error(RespBeanErrorEnum respBeanErrorEnum){
+    public static RespBean error(RespBeanErrorEnum  respBeanErrorEnum){
         return new RespBean(respBeanErrorEnum.getCode(), respBeanErrorEnum.getMessage(), null);
     }
     public static RespBean error(RespBeanErrorEnum respBeanErrorEnum,Object obj){

@@ -9,6 +9,7 @@ import com.hdc.seckill.utils.ValidatorUtil;
 import com.hdc.seckill.vo.LoginVo;
 import com.hdc.seckill.vo.RespBean;
 import com.hdc.seckill.vo.RespBeanErrorEnum;
+import com.hdc.seckill.vo.RespBeanSuccessEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
