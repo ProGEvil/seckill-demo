@@ -1,6 +1,7 @@
 package com.hdc.seckill.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hdc.seckill.exception.GlobalException;
 import com.hdc.seckill.mapper.UserMapper;
 import com.hdc.seckill.pojo.User;
 import com.hdc.seckill.service.IUserService;
@@ -45,11 +46,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //根据手机号获取用户
         User user = userMapper.selectById(mobile);
         if(null == user){
-            return RespBean.error(RespBeanEnum.LOGIN_ERROR);
+            throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
         }
         //判断密码是否正确
         if(!MD5Util.formPassToDBPass(password,user.getSlat()).equals(user.getPassword())){
-            return RespBean.error(RespBeanEnum.LOGIN_ERROR);
+            throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
         }
         return RespBean.success();
     }

@@ -1,8 +1,10 @@
 package com.hdc.seckill.exception;
 
+import com.hdc.seckill.vo.RespBeanEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * @ClassName GlobalException
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GlobalException {
+public class GlobalException extends RuntimeException{
+    private RespBeanEnum respBeanEnum;
 
 }
