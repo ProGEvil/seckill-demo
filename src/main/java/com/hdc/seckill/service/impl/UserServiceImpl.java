@@ -8,8 +8,7 @@ import com.hdc.seckill.utils.MD5Util;
 import com.hdc.seckill.utils.ValidatorUtil;
 import com.hdc.seckill.vo.LoginVo;
 import com.hdc.seckill.vo.RespBean;
-import com.hdc.seckill.vo.RespBeanErrorEnum;
-import com.hdc.seckill.vo.RespBeanSuccessEnum;
+import com.hdc.seckill.vo.RespBeanEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -38,19 +37,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String mobile = loginVo.getMobile();
         String password = loginVo.getPassword();
         if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)){
-            return RespBean.error(RespBeanErrorEnum.LOGIN_ERROR);
+            return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
         if(!ValidatorUtil.isMobile(mobile)){
-            return RespBean.error(RespBeanErrorEnum.MOBILE_ERROR);
+            return RespBean.error(RespBeanEnum.MOBILE_ERROR);
         }
         //根据手机号获取用户
         User user = userMapper.selectById(mobile);
         if(null == user){
-            return RespBean.error(RespBeanErrorEnum.LOGIN_ERROR);
+            return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
         //判断密码是否正确
         if(!MD5Util.formPassToDBPass(password,user.getSlat()).equals(user.getPassword())){
-            return RespBean.error(RespBeanErrorEnum.LOGIN_ERROR);
+            return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
         return RespBean.success();
     }

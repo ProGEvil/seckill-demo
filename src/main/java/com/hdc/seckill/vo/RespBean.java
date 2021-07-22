@@ -20,17 +20,17 @@ public class RespBean {
     private Object obj;
 //成功返回结果
     public static RespBean success(){
-        return new RespBean(RespBeanSuccessEnum.SUCCESS.getCode(), RespBeanSuccessEnum.SUCCESS.getMessage(), null);
+        return new RespBean(RespBeanEnum.SUCCESS.getCode(), RespBeanEnum.SUCCESS.getMessage(), null);
     }
     public static RespBean success(Object obj){
-        return new RespBean(RespBeanSuccessEnum.SUCCESS.getCode(), RespBeanSuccessEnum.SUCCESS.getMessage(), obj);
+        return new RespBean(RespBeanEnum.SUCCESS.getCode(), RespBeanEnum.SUCCESS.getMessage(), obj);
     }
 
     //失败返回结果
-    public static RespBean error(RespBeanErrorEnum  respBeanErrorEnum){
-        return new RespBean(respBeanErrorEnum.getCode(), respBeanErrorEnum.getMessage(), null);
+    public static RespBean error(RespBeanEnum  respBeanEnum){
+        return new RespBean(respBeanEnum.ERROR.getCode(), respBeanEnum.ERROR.getMessage(), null);
     }
-    public static RespBean error(RespBeanErrorEnum respBeanErrorEnum,Object obj){
-        return new RespBean(respBeanErrorEnum.getCode(), respBeanErrorEnum.getMessage(), obj);
+    public static RespBean error(RespBeanEnum respBeanEnum,Object obj){
+        return new RespBean(respBeanEnum.ERROR.getCode(), respBeanEnum.ERROR.getMessage(), obj);
     }
 }
