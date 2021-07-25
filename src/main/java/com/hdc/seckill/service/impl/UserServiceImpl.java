@@ -5,14 +5,17 @@ import com.hdc.seckill.exception.GlobalException;
 import com.hdc.seckill.mapper.UserMapper;
 import com.hdc.seckill.pojo.User;
 import com.hdc.seckill.service.IUserService;
+import com.hdc.seckill.utils.CookieUtil;
 import com.hdc.seckill.utils.MD5Util;
-import com.hdc.seckill.utils.ValidatorUtil;
+import com.hdc.seckill.utils.UUIDUtil;
 import com.hdc.seckill.vo.LoginVo;
 import com.hdc.seckill.vo.RespBean;
 import com.hdc.seckill.vo.RespBeanEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -34,7 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return
      **/
     @Override
-    public RespBean doLogin(LoginVo loginVo){
+    public RespBean doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response){
         String mobile = loginVo.getMobile();
         String password = loginVo.getPassword();
 //        if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)){
@@ -50,6 +53,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(!MD5Util.formPassToDBPass(password,user.getSlat()).equals(user.getPassword())){
             throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
         }
+        //生成Cookie
+        String ticket = UUIDUtil.uuid();
+        request.getSession().setAttribute(ticket,user);
+        CookieUtil.setCookie(request,response,"userTicket",ticket);
         return RespBean.success();
     }
 }

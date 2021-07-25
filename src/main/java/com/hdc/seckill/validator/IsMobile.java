@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(
-        validatedBy = {}
+        validatedBy = {IsMobileValidator.class}
 )
 public @interface IsMobile {
     //定义一个required方法 用于表示必填 默认为true
