@@ -1,7 +1,9 @@
 package com.hdc.seckill.controller;
 
 import com.hdc.seckill.pojo.User;
+import com.hdc.seckill.service.IGoodsService;
 import com.hdc.seckill.service.IUserService;
+import com.hdc.seckill.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,8 @@ import javax.servlet.http.HttpSession;
 public class GoodsController {
     @Autowired
     private IUserService userService;
-
+    @Autowired
+    private IGoodsService goodsService;
     @RequestMapping("/toList")
     public String toList( Model model, User user){
 //        if(StringUtils.isEmpty(ticket)){
@@ -37,6 +40,7 @@ public class GoodsController {
 //            return "login";
 //        }
         model.addAttribute("user",user);
+        model.addAttribute("goodsList",goodsService.findGoodsVo());
         return "goodsList";
     }
 }

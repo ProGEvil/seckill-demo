@@ -1,6 +1,7 @@
-package com.hdc.seckill.validator;
+package com.hdc.seckill.vo;
 
 import com.hdc.seckill.utils.ValidatorUtil;
+import com.hdc.seckill.validator.IsMobile;
 import org.thymeleaf.util.StringUtils;
 
 import javax.validation.ConstraintValidator;

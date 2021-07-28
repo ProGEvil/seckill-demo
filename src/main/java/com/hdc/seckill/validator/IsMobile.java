@@ -1,8 +1,9 @@
 package com.hdc.seckill.validator;
 
+import com.hdc.seckill.vo.IsMobileValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.NotNull;
 import java.lang.annotation.*;
 
 /*
