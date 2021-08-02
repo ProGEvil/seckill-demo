@@ -1,7 +1,7 @@
 spring:
   #thymeleaf配置
   thymeleaf:
-    #关闭缓存
+  #关闭缓存
   cache: false
   #数据源配置
   datasource:
