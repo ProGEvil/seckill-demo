@@ -4,7 +4,6 @@ import com.hdc.seckill.pojo.User;
 import com.hdc.seckill.service.IGoodsService;
 import com.hdc.seckill.service.IUserService;
 import com.hdc.seckill.vo.GoodsVo;
-import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -58,12 +57,16 @@ public class GoodsController {
         WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goodsList",webContext);
         if(!StringUtils.isEmpty(html)){
-            valueOperations.set("goodsList",html,60, TimeUnit.MINUTES);
+            valueOperations.set("goodsList",html,60, TimeUnit.SECONDS);
         }
-        return null;
+        return html;
     }
-    @RequestMapping("/toDetail{goodsId}")
-    public String toDetail(Model model, User user, @PathVariable Long goodsId){
+    @RequestMapping(value = "/toDetail{goodsId}",produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String toDetail(Model model, User user, @PathVariable Long goodsId,HttpServletResponse response,HttpServletRequest request){
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        //从redis中获取页面 如果不为空 直接返回页面
+        String html = (String) (valueOperations.get("goodsDetail:" + goodsId));
         GoodsVo goodsVo = goodsService.findGoodsVoByGoodsId(goodsId);
         //秒杀开始时间
         Date startDate = goodsVo.getStartDate();
@@ -88,6 +91,11 @@ public class GoodsController {
         model.addAttribute("secKillStatus",secKillStatus);
         model.addAttribute("remainSeconds",remainSeconds);
         model.addAttribute("goods",goodsVo);
-        return "goodsDetail";
+        WebContext context = new WebContext(request,response, request.getServletContext(),request.getLocale(), model.asMap());
+        html = thymeleafViewResolver.getTemplateEngine().process("goodsDetail",context);
+        if(!StringUtils.isEmpty(html)){
+            valueOperations.set("goodsDetail"+goodsId,html,60,TimeUnit.SECONDS);
+        }
+        return html;
     }
 }
