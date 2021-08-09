@@ -86,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                                    HttpServletResponse response) {
         User user = getUserByCookie(userTicket,request,response);
         if(user == null){
-            throw new GlobalException(RespBeanEnum.UPDATE_PWD_FAIL);
+            throw new GlobalException(RespBeanEnum.MOBILE_NOT_EXIST);
         }
         user.setPassword(MD5Util.inputPassToDBPass(password,user.getSlat()));
         //取出user的id值 存入result结果集中
